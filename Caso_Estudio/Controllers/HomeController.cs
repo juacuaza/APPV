@@ -15,14 +15,14 @@ namespace Caso_Estudio.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "Aplicación web que trata sobre las gestión de todos los videoclubs de una cadena llamada APPV.";
 
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "Página de contacto.";
 
             return View();
         }
