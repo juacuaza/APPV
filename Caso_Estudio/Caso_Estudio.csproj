@@ -77,10 +77,6 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="SQLite.NET, Version=0.21.1869.3794, Culture=neutral, PublicKeyToken=c273bd375e695f9c">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\SQLite.NET.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -200,9 +196,14 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdministradorsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PeliculasController.cs" />
+    <Compile Include="Controllers\SociosController.cs" />
+    <Compile Include="Controllers\VideoClubsController.cs" />
     <Compile Include="DAL\VideoClubContext.cs" />
+    <Compile Include="DAL\VideoClubInitializer.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -275,6 +276,26 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\VideoClubs\Create.cshtml" />
+    <Content Include="Views\VideoClubs\Delete.cshtml" />
+    <Content Include="Views\VideoClubs\Details.cshtml" />
+    <Content Include="Views\VideoClubs\Edit.cshtml" />
+    <Content Include="Views\VideoClubs\Index.cshtml" />
+    <Content Include="Views\Peliculas\Create.cshtml" />
+    <Content Include="Views\Peliculas\Delete.cshtml" />
+    <Content Include="Views\Peliculas\Details.cshtml" />
+    <Content Include="Views\Peliculas\Edit.cshtml" />
+    <Content Include="Views\Peliculas\Index.cshtml" />
+    <Content Include="Views\Socios\Create.cshtml" />
+    <Content Include="Views\Socios\Delete.cshtml" />
+    <Content Include="Views\Socios\Details.cshtml" />
+    <Content Include="Views\Socios\Edit.cshtml" />
+    <Content Include="Views\Socios\Index.cshtml" />
+    <Content Include="Views\Administradors\Create.cshtml" />
+    <Content Include="Views\Administradors\Delete.cshtml" />
+    <Content Include="Views\Administradors\Details.cshtml" />
+    <Content Include="Views\Administradors\Edit.cshtml" />
+    <Content Include="Views\Administradors\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

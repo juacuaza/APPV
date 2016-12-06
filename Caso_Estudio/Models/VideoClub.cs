@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Caso_Estudio.Models
 {
     public class VideoClub
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Display(Name = "Codigo")]
         public int VideoClubID { get; set; }
 
