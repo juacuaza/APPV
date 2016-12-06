@@ -36,6 +36,21 @@ namespace Caso_Estudio.Controllers
             return View(videoClub);
         }
 
+        // GET: VideoClubs/PelisVC/5
+        public ActionResult PelisVC(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            VideoClub videoClub = db.VideoClubs.Find(id);
+            if (videoClub == null)
+            {
+                return HttpNotFound();
+            }
+            return View(videoClub.Peliculas);
+        }
+
         // GET: VideoClubs/Create
         public ActionResult Create()
         {
@@ -72,6 +87,24 @@ namespace Caso_Estudio.Controllers
                 return HttpNotFound();
             }
             return View(videoClub);
+        }
+
+        // GET: VideoClubs/EditPeliculas/5
+        public ActionResult EditPeliculas(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            //VideoClub videoClub = db.VideoClubs.Find(id);
+            Pelicula pelicula = db.Peliculas.Find(id);
+            if (pelicula == null)
+            {
+                return HttpNotFound();
+            }
+            //return View("Edit", pelicula);
+            return RedirectToAction("Edit/" + pelicula.PeliculaID, "Peliculas");
+
         }
 
         // POST: VideoClubs/Edit/5

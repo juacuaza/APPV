@@ -1,15 +1,15 @@
 ﻿@model IEnumerable<Caso_Estudio.Models.Pelicula>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "PelisVC";
 }
 
-<h2>Index</h2>
+<h2>PelisVC</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table" id="Tpelis">
+<table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Name)
@@ -41,7 +41,7 @@
             @Html.DisplayFor(modelItem => item.Price)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.PeliculaID }) |
+            @Html.ActionLink("Edit", "EditPeliculas", new { id=item.PeliculaID }) |
             @Html.ActionLink("Details", "Details", new { id=item.PeliculaID }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.PeliculaID })
         </td>

@@ -9,6 +9,12 @@ namespace Caso_Estudio.Models
 {
     public class VideoClub
     {
+
+        public VideoClub()
+        {
+            Peliculas = new List<Pelicula>();
+        }
+        
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Display(Name = "Codigo")]
         public int VideoClubID { get; set; }

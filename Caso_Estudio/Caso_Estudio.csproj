@@ -296,6 +296,7 @@
     <Content Include="Views\Administradors\Details.cshtml" />
     <Content Include="Views\Administradors\Edit.cshtml" />
     <Content Include="Views\Administradors\Index.cshtml" />
+    <Content Include="Views\VideoClubs\PelisVC.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
