@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -13,6 +10,7 @@ namespace Caso_Estudio.Models
         public VideoClub()
         {
             Peliculas = new List<Pelicula>();
+            Socios = new List<Socio>();
         }
         
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
@@ -38,5 +36,6 @@ namespace Caso_Estudio.Models
         public string Zip { get; set; }
 
         public virtual ICollection<Pelicula> Peliculas { get; set; }
+        public virtual ICollection<Socio> Socios { get; set; }
     }
 }

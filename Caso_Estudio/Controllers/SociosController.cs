@@ -1,19 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using Caso_Estudio.DAL;
 using Caso_Estudio.Models;
+using System.Collections.Generic;
 
 namespace Caso_Estudio.Controllers
 {
     public class SociosController : Controller
-    {
+    {        
         private VideoClubContext db = new VideoClubContext();
+
 
         // GET: Socios
         public ActionResult Index()
@@ -36,6 +35,60 @@ namespace Caso_Estudio.Controllers
             return View(socio);
         }
 
+
+        // GET: Socios/Registro
+        public ActionResult Registro()
+        {
+            int i = 110;
+            ViewBag.name = new SelectList(db.VideoClubs.Select(s => s.Name).ToList());
+            return View();
+        }
+
+        // Post: Socios/Registro
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Registro([Bind(Include = "SocioID,Name,Password,Age,VideoClub")] Socio socio)
+        {
+            try
+            {
+                List<VideoClub> listaVC = new List<VideoClub>();
+                VideoClub vc = null;
+                foreach(VideoClub vd in db.VideoClubs)
+                {
+                    listaVC.Add(vd);
+                }
+
+                if (listaVC != null)
+                {
+                    string[] strCadena = Request.Form["name"].Split(',');
+                    var strnombre = strCadena[1];
+                     vc = listaVC.Where(s => s.Name.Equals(strnombre)).FirstOrDefault();
+                }
+
+
+                //VideoClub vc = (from s in db.VideoClubs
+                //               where s.Name.Equals(Request.Form["name"].LastOrDefault().ToString())
+                //               select s).FirstOrDefault();
+
+                //VideoClub vc = db.VideoClubs.Where(s => s.Name.Equals(Request.Form["VideoClub"].ToString())).FirstOrDefault();
+                if (vc != null)
+                    socio.VideoClub = vc;
+            }
+            catch { }
+
+            if (ModelState.IsValid)
+            {
+                db.Socios.Add(socio);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return View(socio);
+        }
+
+
+
+
         // GET: Socios/Create
         public ActionResult Create()
         {
@@ -47,7 +100,7 @@ namespace Caso_Estudio.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "SocioID,Name,Age")] Socio socio)
+        public ActionResult Create([Bind(Include = "SocioID,Name,Password,Age")] Socio socio)
         {
             if (ModelState.IsValid)
             {
@@ -79,7 +132,7 @@ namespace Caso_Estudio.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "SocioID,Name,Age")] Socio socio)
+        public ActionResult Edit([Bind(Include = "SocioID,Name,Password,Age")] Socio socio)
         {
             if (ModelState.IsValid)
             {
