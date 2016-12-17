@@ -21,7 +21,8 @@ namespace Caso_Estudio.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            //: base("DefaultConnection", throwIfV1Schema: false)
+            : base("aspnet-Caso_Estudio-20161201054756", throwIfV1Schema: false)
         {
         }
 
