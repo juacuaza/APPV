@@ -28,7 +28,6 @@ namespace Caso_Estudio.Models
         public double Price { get; set; }
 
         public virtual VideoClub VideoClub { get; set; }
-
         public virtual Alquiler Alquiler { get; set; }
     }
 }

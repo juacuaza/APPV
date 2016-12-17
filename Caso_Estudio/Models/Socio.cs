@@ -1,9 +1,15 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Caso_Estudio.Models
 {
     public class Socio
     {
+        public Socio()
+        {
+            Alquileres = new List<Alquiler>();
+        }
+
         [Display(Name = "Codigo Socio")]
         public int SocioID { get; set; }
 
@@ -21,5 +27,6 @@ namespace Caso_Estudio.Models
         public int Age { get; set; }
 
         public virtual VideoClub VideoClub { get; set; }
+        public virtual ICollection<Alquiler> Alquileres { get; set; }
     }
 }

@@ -23,6 +23,12 @@
         <th>
             @Html.DisplayNameFor(model => model.Zip)
         </th>
+        <th>
+            @Html.Label("Nº Peliculas")
+        </th>
+        <th>
+            @Html.Label("Nº Socios")
+        </th>
         <th></th>
     </tr>
 
@@ -39,9 +45,16 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Zip)
-        </td>  
+        </td> 
+        <td>           
+            @Html.Label(item.Peliculas.Count.ToString())
+        </td>
+        <td>
+            @Html.Label(item.Socios.Count.ToString())
+        </td>
         <td>
             @Html.ActionLink("Ver Peliculas", "PelisVC", new { id = item.VideoClubID }) |
+            @Html.ActionLink("Ver Socios", "SociosVC", new { id = item.VideoClubID }) |
             @Html.ActionLink("Edit", "Edit", new { id=item.VideoClubID }) |
             @*@Html.ActionLink("Details", "Details", new { id=item.VideoClubID }) |*@
             @Html.ActionLink("Delete", "Delete", new { id=item.VideoClubID })

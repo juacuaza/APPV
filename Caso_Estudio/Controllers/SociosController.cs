@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Caso_Estudio.DAL;
 using Caso_Estudio.Models;
 using System.Collections.Generic;
+using System;
 
 namespace Caso_Estudio.Controllers
 {
@@ -38,8 +39,7 @@ namespace Caso_Estudio.Controllers
 
         // GET: Socios/Registro
         public ActionResult Registro()
-        {
-            int i = 110;
+        {           
             ViewBag.name = new SelectList(db.VideoClubs.Select(s => s.Name).ToList());
             return View();
         }
@@ -65,12 +65,6 @@ namespace Caso_Estudio.Controllers
                      vc = listaVC.Where(s => s.Name.Equals(strnombre)).FirstOrDefault();
                 }
 
-
-                //VideoClub vc = (from s in db.VideoClubs
-                //               where s.Name.Equals(Request.Form["name"].LastOrDefault().ToString())
-                //               select s).FirstOrDefault();
-
-                //VideoClub vc = db.VideoClubs.Where(s => s.Name.Equals(Request.Form["VideoClub"].ToString())).FirstOrDefault();
                 if (vc != null)
                     socio.VideoClub = vc;
             }
@@ -87,7 +81,60 @@ namespace Caso_Estudio.Controllers
         }
 
 
+        // GET: Socios/Login
+        public ActionResult Login()
+        {
+            return View();
+        }
 
+        //POST: Socios/Login
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult Login(Socio model, string returnUrl)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            // No cuenta los errores de inicio de sesión para el bloqueo de la cuenta
+            // Para permitir que los errores de contraseña desencadenen el bloqueo de la cuenta, cambie a shouldLockout: true
+            var result = PasswordSign(model.Name, model.Password);
+            switch (result)
+            {
+                case "success":
+                    return RedirectToLocal(returnUrl);
+                case "fail":
+                default:
+                    ModelState.AddModelError("", "Intento de inicio de sesión no válido.");
+                    return View(model);
+            }
+        }
+
+        //Comprueba si el socio esta en la ddbb
+        private string PasswordSign(string name, string password)
+        {
+            Socio socio = null;
+            string login = "fail";
+
+            socio = db.Socios.Where(s => (s.Name.Equals(name) && s.Password.Equals(password))).FirstOrDefault();
+
+            if (socio != null)
+                login = "success";
+
+            return login;
+        }
+
+        //Devuelve la pagina que se le pasa como string
+        private ActionResult RedirectToLocal(string returnUrl)
+        {
+            if (Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
+            return RedirectToAction("Index", "Home");
+        }
 
         // GET: Socios/Create
         public ActionResult Create()

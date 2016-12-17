@@ -1,0 +1,61 @@
+﻿@model IEnumerable<Caso_Estudio.Models.Alquiler>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.AlquilerID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PickUpate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateOfReturn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cost)
+        </th>
+        <th>
+            @Html.Label("Pelicula")
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.AlquilerID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PickUpate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateOfReturn)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Cost)
+        </td>
+        <td>            
+            @foreach (var item2 in item.Peliculas)
+            {
+                @Html.DisplayFor(modelItem => item2.Name)
+                <br />
+            }
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.AlquilerID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.AlquilerID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.AlquilerID })
+        </td>
+    </tr>
+}
+
+</table>

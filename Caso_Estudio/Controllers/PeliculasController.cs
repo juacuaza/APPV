@@ -36,9 +36,58 @@ namespace Caso_Estudio.Controllers
             return View(pelicula);
         }
 
+        // GET: Peliculas/Alquilar
+        public ActionResult Alquilar(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Pelicula pelicula = db.Peliculas.Find(id);
+            if (pelicula == null)
+            {
+                return HttpNotFound();
+            }
+            return View(pelicula);
+        }
+
+
+        // POST: Peliculas/Alquilar
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Alquilar(FormCollection values)
+        {
+            if (values == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            try
+            {
+                int id = int.Parse(values["PeliculaID"]);
+                Pelicula pelicula = db.Peliculas.Find(id);
+                Alquiler auxAlquiler = new Alquiler();
+                auxAlquiler.PickUpate = DateTime.Parse(values["Alquiler.PickUpate"]);
+                auxAlquiler.DateOfReturn = DateTime.Parse(values["Alquiler.DateOfReturn"]);
+                auxAlquiler.Cost = pelicula.Price;
+                pelicula.Alquiler = auxAlquiler;
+                auxAlquiler.Peliculas.Add(pelicula);
+                db.Alquileres.Add(auxAlquiler);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View("Index");
+            }
+
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        }
+
         // GET: Peliculas/Create
         public ActionResult Create()
         {
+            ViewBag.name = new SelectList(db.VideoClubs.Select(s => s.Name).ToList());
             return View();
         }
 
@@ -49,6 +98,27 @@ namespace Caso_Estudio.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "PeliculaID,Name,Director,ReleaseDate,Price")] Pelicula pelicula)
         {
+            try
+            {            
+                List<VideoClub> listaVC = new List<VideoClub>();
+                VideoClub vc = null;
+                foreach (VideoClub vd in db.VideoClubs)
+                {
+                    listaVC.Add(vd);
+                }
+
+                if (listaVC != null)
+                {
+                    string[] strCadena = Request.Form["name"].Split(',');
+                    var strnombre = strCadena[1];
+                    vc = listaVC.Where(s => s.Name.Equals(strnombre)).FirstOrDefault();
+                }
+
+                if (vc != null)
+                    pelicula.VideoClub = vc;
+            }
+            catch { }
+
             if (ModelState.IsValid)
             {
                 db.Peliculas.Add(pelicula);

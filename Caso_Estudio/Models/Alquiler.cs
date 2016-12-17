@@ -7,6 +7,10 @@ namespace Caso_Estudio.Models
 {
     public class Alquiler
     {
+        public Alquiler()
+        {
+            Peliculas = new List<Pelicula>();
+        }
         [Display(Name = "Codigo Alquiler")]
         public int AlquilerID { get; set; }
 
@@ -23,8 +27,9 @@ namespace Caso_Estudio.Models
 
         [Required]
         [Display(Name = "Total a Pagar")]
-        public float Cost { get; set; }
+        public double Cost { get; set; }
 
         public virtual ICollection<Pelicula> Peliculas { get; set; }
+        public virtual Socio Socio { get; set; }
     }
 }

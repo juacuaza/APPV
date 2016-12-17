@@ -11,156 +11,122 @@ using Caso_Estudio.Models;
 
 namespace Caso_Estudio.Controllers
 {
-    public class VideoClubsController : Controller
+    public class AlquilersController : Controller
     {
         private VideoClubContext db = new VideoClubContext();
 
-        // GET: VideoClubs
+        // GET: Alquilers
         public ActionResult Index()
         {
-            return View(db.VideoClubs.ToList());
+            return View(db.Alquileres.ToList());
         }
 
-        // GET: VideoClubs/Details/5
+        // GET: Alquilers/Alquiler
+        public ActionResult Alquiler(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Alquiler alquiler = db.Alquileres.Find(id);
+            if (alquiler == null)
+            {
+                return HttpNotFound();
+            }
+            return View(alquiler);
+        }
+
+        // GET: Alquilers/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            VideoClub videoClub = db.VideoClubs.Find(id);
-            if (videoClub == null)
+            Alquiler alquiler = db.Alquileres.Find(id);
+            if (alquiler == null)
             {
                 return HttpNotFound();
             }
-            return View(videoClub);
+            return View(alquiler);
         }
 
-        // GET: VideoClubs/PelisVC/?
-        public ActionResult PelisVC(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            VideoClub videoClub = db.VideoClubs.Find(id);
-            if (videoClub == null)
-            {
-                return HttpNotFound();
-            }
-            return View(videoClub.Peliculas);
-        }
-
-
-        // GEt: VideoClub/Socio/?
-        public ActionResult SociosVC(int? id)
-        {
-            if(id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            VideoClub videoClub = db.VideoClubs.Find(id);
-            if (videoClub == null)
-            {
-                return HttpNotFound();
-            }
-            return View(videoClub.Socios);
-        }
-
-        // GET: VideoClubs/Create
+        // GET: Alquilers/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: VideoClubs/Create
+        // POST: Alquilers/Create
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "VideoClubID,Name,City,Address,Zip")] VideoClub videoClub)
+        public ActionResult Create([Bind(Include = "AlquilerID,PickUpate,DateOfReturn,Cost")] Alquiler alquiler)
         {
             if (ModelState.IsValid)
             {
-                db.VideoClubs.Add(videoClub);
+                db.Alquileres.Add(alquiler);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(videoClub);
+            return View(alquiler);
         }
 
-        // GET: VideoClubs/Edit/5
+        // GET: Alquilers/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            VideoClub videoClub = db.VideoClubs.Find(id);
-            if (videoClub == null)
+            Alquiler alquiler = db.Alquileres.Find(id);
+            if (alquiler == null)
             {
                 return HttpNotFound();
             }
-            return View(videoClub);
+            return View(alquiler);
         }
 
-        // GET: VideoClubs/EditPeliculas/5
-        public ActionResult EditPeliculas(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            //VideoClub videoClub = db.VideoClubs.Find(id);
-            Pelicula pelicula = db.Peliculas.Find(id);
-            if (pelicula == null)
-            {
-                return HttpNotFound();
-            }
-            //return View("Edit", pelicula);
-            return RedirectToAction("Edit/" + pelicula.PeliculaID, "Peliculas");
-
-        }
-
-        // POST: VideoClubs/Edit/5
+        // POST: Alquilers/Edit/5
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "VideoClubID,Name,City,Address,Zip")] VideoClub videoClub)
+        public ActionResult Edit([Bind(Include = "AlquilerID,PickUpate,DateOfReturn,Cost")] Alquiler alquiler)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(videoClub).State = EntityState.Modified;
+                db.Entry(alquiler).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(videoClub);
+            return View(alquiler);
         }
 
-        // GET: VideoClubs/Delete/5
+        // GET: Alquilers/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            VideoClub videoClub = db.VideoClubs.Find(id);
-            if (videoClub == null)
+            Alquiler alquiler = db.Alquileres.Find(id);
+            if (alquiler == null)
             {
                 return HttpNotFound();
             }
-            return View(videoClub);
+            return View(alquiler);
         }
 
-        // POST: VideoClubs/Delete/5
+        // POST: Alquilers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            VideoClub videoClub = db.VideoClubs.Find(id);
-            db.VideoClubs.Remove(videoClub);
+            Alquiler alquiler = db.Alquileres.Find(id);
+            db.Alquileres.Remove(alquiler);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

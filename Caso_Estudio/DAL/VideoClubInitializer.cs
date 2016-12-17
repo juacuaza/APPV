@@ -34,6 +34,16 @@ namespace Caso_Estudio.DAL
                 new Pelicula { PeliculaID =10 , Name="Origen",               Director="Christopher Nolan",  ReleaseDate=new DateTime(2010, 9, 11), Price=3.00, Alquiler=null, VideoClub=videoclub[4]  }
             };
 
+            var socios = new List<Socio>
+            {
+                new Socio { SocioID=1, Name="Julian",   Password="1234",  Age=20,   VideoClub=videoclub[0]},
+                new Socio { SocioID=2, Name="Alberto",  Password="1234",  Age=21,   VideoClub=videoclub[1]},
+                new Socio { SocioID=3, Name="Rosa",     Password="1234",  Age=22,   VideoClub=videoclub[2]},
+                new Socio { SocioID=4, Name="Salvador", Password="1234", Age=23,    VideoClub=videoclub[3]},
+                new Socio { SocioID=5, Name="Cristiano",Password="1234",  Age=24,   VideoClub=videoclub[4]}
+            };
+
+            /*Crea la relacion Pelicula -> Videoclub*/
             for (int i = 0; i < videoclub.Count; i++)
             {
                 var list = new List<Pelicula>();
@@ -48,24 +58,23 @@ namespace Caso_Estudio.DAL
                 videoclub[i].Peliculas = list;
             }
 
-            //guardamos el contexto de el videoclub y la pelicula
+            /*Creamos la relacion Socio -> VideoClub*/
+            for (int i = 0; i < videoclub.Count; i++)
+            {
+                var list = new List<Socio>();
+                for (int j = 0; j < socios.Count; j++)
+                {
+                    if(videoclub[i].VideoClubID == socios[j].VideoClub.VideoClubID)
+                    {
+                        if (!(list.Contains(socios[j])))
+                            list.Add(socios[j]);
+                    }
+                }
+                videoclub[i].Socios = list;
+            }
+
             videoclub.ForEach(s => context.VideoClubs.Add(s));
             context.SaveChanges();
-            //El propio contexto guarda las pelis
-            //peliculas.ForEach(s => context.Peliculas.Add(s));                         
-            //context.SaveChanges();
-
-            var socios = new List<Socio>
-            {
-                new Socio { SocioID=1, Name="Julian",   Password="1234",  Age=20},
-                new Socio { SocioID=2, Name="Alberto",  Password="1234",  Age=21},
-                new Socio { SocioID=3, Name="Rosa",     Password="1234",  Age=22},
-                new Socio { SocioID=4, Name="Salvador", Password="12343", Age=23},
-                new Socio { SocioID=5, Name="Cristiano",Password="1234",  Age=24}
-            };
-            socios.ForEach(s => context.Socios.Add(s));
-            context.SaveChanges();
-
             var admins = new List<Administrador>
             {
                 new Administrador {AdministradorID=1, Name="Marco" },

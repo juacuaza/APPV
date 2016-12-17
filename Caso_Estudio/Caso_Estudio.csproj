@@ -198,6 +198,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdministradorsController.cs" />
+    <Compile Include="Controllers\AlquilersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PeliculasController.cs" />
@@ -317,6 +318,14 @@
     <Content Include="Views\Socios\Edit.cshtml" />
     <Content Include="Views\Socios\Index.cshtml" />
     <Content Include="Views\Socios\Registro.cshtml" />
+    <Content Include="Views\Socios\Login.cshtml" />
+    <Content Include="Views\VideoClubs\SociosVC.cshtml" />
+    <Content Include="Views\Alquilers\Create.cshtml" />
+    <Content Include="Views\Alquilers\Delete.cshtml" />
+    <Content Include="Views\Alquilers\Details.cshtml" />
+    <Content Include="Views\Alquilers\Edit.cshtml" />
+    <Content Include="Views\Alquilers\Index.cshtml" />
+    <Content Include="Views\Peliculas\Alquilar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
