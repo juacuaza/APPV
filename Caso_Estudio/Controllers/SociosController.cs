@@ -139,6 +139,7 @@ namespace Caso_Estudio.Controllers
         // GET: Socios/Create
         public ActionResult Create()
         {
+            ViewBag.name = new SelectList(db.VideoClubs.Select(s => s.Name).ToList());
             return View();
         }
 
@@ -147,8 +148,29 @@ namespace Caso_Estudio.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "SocioID,Name,Password,Age")] Socio socio)
+        public ActionResult Create([Bind(Include = "SocioID,Name,Password,Age,VideoClub")] Socio socio)
         {
+            try
+            {
+                List<VideoClub> listaVC = new List<VideoClub>();
+                VideoClub vc = null;
+                foreach (VideoClub vd in db.VideoClubs)
+                {
+                    listaVC.Add(vd);
+                }
+
+                if (listaVC != null)
+                {
+                    string[] strCadena = Request.Form["name"].Split(',');
+                    var strnombre = strCadena[1];
+                    vc = listaVC.Where(s => s.Name.Equals(strnombre)).FirstOrDefault();
+                }
+
+                if (vc != null)
+                    socio.VideoClub = vc;
+            }
+            catch { }
+
             if (ModelState.IsValid)
             {
                 db.Socios.Add(socio);
